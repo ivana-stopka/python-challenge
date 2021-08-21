@@ -8,35 +8,37 @@
 	# The greatest decrease in losses (date and amount) over the entire period
 
 # Import the modules
+import os
 import csv
 import shutil
 
 # Print heading
+print("----------------------------")
 print("Financial Analysis")
 print("----------------------------")
 
-# Define list variable
+# Define list variables
 profit_loss = []
 date = []
 
 # Set path for the csv file
-csvpath = r"C:\Users\ivana\OneDrive\Documents\Data Analytics Bootcamp\Homework\python-challenge\PyBank\Resources\budget_data.csv"
+PyBank_csv = os.path.join("Resources","budget_data.csv")
 
 # Open the csv
-with open(csvpath) as csvfile:
-	csvreader=csv.reader(csvfile,delimiter=",")
+with open(PyBank_csv) as csv_file:
+	csv_reader=csv.reader(csv_file,delimiter=",")
 
-	# Loop through the first column(0) and move values to the list 'date' then remove column header
-	for col in csvreader:
+	# Loop through the first column(0) and move values to the list 'date' then remove column header.
+	for col in csv_reader:
 		date.append(col[0])
 date.remove("Date")
 
 # Open the csv again
-with open(csvpath) as csvfile:
-	csvreader=csv.reader(csvfile,delimiter=",")
+with open(PyBank_csv) as csv_file:
+	csv_reader=csv.reader(csv_file,delimiter=",")
 
-	# Loop through the second column(1) and move values to the list 'profit_loss' then remove column header
-	for col in csvreader:
+	# Loop through the second column(1) and move values to the list 'profit_loss' then remove column header.
+	for col in csv_reader:
 		profit_loss.append(col[1])
 profit_loss.remove("Profit/Losses")
 
@@ -78,6 +80,7 @@ Min = min(diff_profit_loss)
 formatted_Min = "${:,.0f}".format(Min)
 Min_Index = diff_profit_loss.index(Min)
 print("Greatest decrease in profits: ",date[Min_Index+1],formatted_Min)
+print("----------------------------")
 
 # Write to a text file the results
 lines = ["Financial Analysis",
@@ -93,6 +96,5 @@ with open('results.txt','w') as f:
 source = "results.txt"
 destination = "Analysis"
 new_path=shutil.move(source,destination)
-print(new_path)
 
 
